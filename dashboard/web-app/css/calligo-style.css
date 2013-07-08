@@ -1,0 +1,302 @@
+/*** LOAD ADDITIONAL STYLES ***/
+@import "reset.css";
+@import "image_slider.css";
+
+/*** FONT REPLACEMENT **/
+@font-face {
+	font-family: "Museo Slab 500";
+	src: url('../fonts/museo_slab_500.eot');
+	src: local('§'),
+			url('../fonts/museo_slab_500.woff') format('woff'),
+			url('../fonts/museo_slab_500.ttf') format('truetype'),
+			url('../fonts/museo_slab_500.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "MuseoSans 300";
+	src: url('../fonts/museo_sans_300.eot');
+	src: local('§'),
+			url('../fonts/museo_sans_300.woff') format('woff'),
+			url('../fonts/museo_sans_300.ttf') format('truetype'),
+			url('../fonts/museo_sans_300.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*** DEFAULTS ***/
+body {
+	background-color: #e0f8fc;
+	font-family: "MuseoSans 300","Arial",sans-serif;
+}
+a {
+	text-decoration: none;
+}
+h1 {
+	background: url(../img/logo_calligo.png) no-repeat;
+	width: 169px;
+	height: 116px;
+	margin: 0 0 0 20px;
+	text-indent: -9999px;
+	overflow: hidden;
+}
+h2 {
+	color: #f79b20;
+	font-size: 1.4em;
+	font-family: "Museo Slab 500","Georgia",serif;
+}
+h2 span {
+	color: #00bbe8;
+}
+h2 span.trademark {
+	font-size:0.7em;
+	position: relative;
+	top: -5px;
+}
+h3, h4 {
+	font-family: "Museo Slab 500","Georgia",serif;
+}
+li {
+	list-style: inside;
+}
+
+/*** GLOBAL CLASSES ***/
+.clear {
+	clear: both;
+}
+
+/*** LAYOUT ***/
+.site_container {
+	width: 916px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 41px 21px 108px 21px;
+}
+.col_3 {
+	width: 245px;
+	padding: 0 20px;
+	margin: 0 20px 0 0;
+	float: left;
+}
+
+/*** HEADER (logo/strapline/nav) ***/
+header {
+	position: relative;
+	padding: 0 0 23px 0;
+}
+header hgroup {
+	display: block;
+	width: 189px;
+	float: left;
+}
+header h2 {
+	position: absolute;
+	top: 39px;
+	right: 2px;
+}
+nav ul {
+	display: block;
+	float: right;
+	padding: 90px 0 0 0;
+}
+nav ul li {
+	display: inline;
+	padding: 0 0 0 37px;
+}
+nav ul li:first-child {
+	padding: 0;
+}
+nav ul li a {
+	color: #9b9b9b;
+	text-align: right;
+	padding: 0 0 2px 0;
+}
+nav ul li a:hover {
+	border-bottom: 1px solid #9b9b9b;
+}
+
+/*** BANNER (image slider/key sales) ***/
+section.banner {
+	display: block;
+	height: 283px;
+	padding: 0 0 36px;
+}
+.image_slider {
+	float: left;
+	height: 283px;
+}
+.key_sales {
+	width: 292px;
+	float: right;
+}
+.orange_box_module {
+	padding: 22px 23px 34px;
+	margin: 0 0 20px 0;
+	background: url(../img/bg_orange.png) repeat;
+	border-radius: 7px;
+	color: #fff;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	font-size: 0.9em;
+}
+.orange_box_module h3 {
+	padding: 0 0 5px 0;
+	font-size: 1.1em;
+}
+
+/*** QUICK LINKS ***/
+.site_quicklinks {
+	padding: 0 0 15px;
+	height: 80px;
+}
+.site_quicklinks, .site_quicklinks a {
+	color: #989898;
+}
+.site_quicklinks h4 {
+	color: #f99b1f;
+	width: 100%;
+	padding: 0 0 10px 3px;
+	margin: 0 0 10px 0;
+	border-bottom: 1px solid #ccc;
+	font-size: 1.1em;
+}
+.site_quicklinks li {
+	display: block;
+	float: left;
+	width: 108px;
+	background: url(../img/bullet.png) no-repeat 2px 4px;
+	padding: 0 0 5px 14px;
+	font-size: 0.8em;
+}
+.site_quicklinks a:hover {
+	text-decoration: underline;
+}
+
+/*** PRODUCT SUMMARY ***/
+.product_summary {
+	padding: 0 0 40px 0;
+	height: 275px;
+}
+.product_summary article {
+	color: #6f7072;
+	padding: 30px 23px 17px;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	font-size: 0.82em;
+}
+.product_summary .one {
+	background-color: #f2fcfe;
+}
+.product_summary .two {
+	background-color: #ccf1fa;
+}
+.product_summary .three {
+	background-color: #e5f8fe;
+	margin: 0;
+}
+.product_summary h3 {
+	font-size: 1.3em;
+	display: block;
+	width: 100%;
+	border-bottom: 1px solid #00bbe8;
+	padding: 0 0 12px 0;
+	margin: 0 0 10px 0;
+}
+.product_summary p {
+	padding: 0 0 30px 0;
+}
+.product_summary a {
+	color: #00bae9;
+	text-transform: uppercase;
+	float: right;
+}
+
+.product_img {
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+/*** FOOTER (sitemap/copyright/contact) ***/
+.sitemap {
+	padding: 0 0 33px;
+	color: #999999;
+}
+.sitemap article {
+	width: 152px;
+	float: left;
+}
+.sitemap h5 {
+	display: block;
+	width: 100%;
+	padding: 0 0 3px 2px;
+	margin: 0 0 1px;
+	font-size: 0.9em;
+}
+.sitemap a {
+	color: #999;
+	font-size: 0.7em;
+	padding: 0 0 0 3px;
+}
+.sitemap a:hover {
+	text-decoration: underline;
+}
+.sitemap ul {
+	padding: 0 0 15px;
+}
+.sitemap li {
+	list-style: none;
+}
+.copy_contact {
+	background: url(../img/bg_orange.png) repeat;
+	color: #fff;
+	padding: 0 24px;
+	line-height: 35px;
+	height: 35px;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+.copy_contact small {
+	display: block;
+	width: 220px;
+	float: left;
+	font-size: 0.75em;
+}
+.copy_contact a {
+	color: #fff;
+}
+.copy_contact ul {
+	display: block;
+	float: right;
+}
+.copy_contact ul li {
+	float: right;
+	text-align: right;
+	list-style: none;
+	margin: 0 0 0 10px;
+}
+.copy_contact ul li.tel {
+	width: 153px;
+	padding: 0 0 0 55px;
+	background: url(../img/contact_tel.jpg) no-repeat;
+}
+.copy_contact ul li.email {
+	width: 122px;
+	padding: 0 0 0 50px;
+	background: url(../img/contact_email.jpg) no-repeat;
+}
+.copy_contact ul li.skype {
+	width: 79px;
+	padding: 0 0 0 50px;
+	background: url(../img/contact_skype.jpg) no-repeat;
+}
+.copy_contact ul li span {
+	display: block;
+	position: absolute;
+	text-indent: -9999em;
+}
+#loginControl{
+	float:right;
+	color: #fff;
+}

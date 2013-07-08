@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="layout" content="main" />
+    <title>History Ticket</title>         
+  </head>
+  <body>
+    <div class="body">
+      <h1>Ticket History</h1>
+      
+      <g:if test="${flash.message}">
+        
+      </g:if>
+      
+      <g:textArea name="history" value ="${flash.message}" readonly="true"/>
+   
+    </div>
+  </body>
+</html>

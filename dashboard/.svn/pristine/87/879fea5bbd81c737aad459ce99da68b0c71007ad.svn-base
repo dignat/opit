@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report10" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2805eaa6-1ed8-473e-924a-da814467de12">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="invoice_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT invoice.id,invoice.invoice_no,invoice.billing_date,invoice.total,
+client.company,client.city,product.description,item.units,item.item_total,item.item_unit_price,item.setup_unit_price,client.logo
+from invoice,client,product,item,invoice_item
+where invoice.id = $P{invoice_id}
+and invoice.client_id = client.id
+and item.product_id = product.id
+and invoice_item.invoice_items_id = invoice.id
+and invoice_item.item_id =item.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoice_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="billing_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="company" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="units" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_unit_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="setup_unit_price" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="logo" class="java.io.InputStream">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="item_total_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{item_total}]]></variableExpression>
+	</variable>
+	<variable name="discount_amount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{item_total_1}-$F{item_total}]]></variableExpression>
+	</variable>
+	<variable name="logoz" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<image>
+				<reportElement uuid="fa042ebc-636d-408f-8d0d-eb95b07e4224" x="422" y="15" width="123" height="50"/>
+				<imageExpression><![CDATA[$F{logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="58769a7e-88f0-44ba-a833-fb08897a0b90" x="247" y="19" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Invoice Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0ec485b5-01b3-469b-a240-e80596b97388" x="60" y="18" width="167" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAX INVOICE]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6710c6b6-c034-4de9-b78c-4ac080af2db9" x="246" y="20" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Invoice No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f37737c3-5c1f-4cde-836c-4c8f08130066" x="140" y="68" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ddbff1c-db56-4a1b-a712-c521b68f6262" x="256" y="68" width="63" height="20"/>
+				<textElement/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c0009ee-6fe1-4cbf-a206-6481052cc9f6" x="319" y="69" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="34f84cb6-2357-4b25-94ea-29369b1298c2" x="405" y="68" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="670d023a-136f-4a67-bee6-26fcd64d8877" x="476" y="68" width="73" height="20"/>
+				<textElement/>
+				<text><![CDATA[Amount GBP]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="35cc22a3-2b5e-4f5d-a7e2-91167ed9dc89" x="65" y="88" width="489" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="af9915d9-5442-4076-8455-a1d80136acd7" x="247" y="40" width="99" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c8a81d5f-8d7f-4d77-8ea3-4c8c71fb5cd3" x="246" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{billing_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<elementGroup/>
+			<elementGroup/>
+			<staticText>
+				<reportElement uuid="f8beff28-5693-4a80-983b-18fdfef72d0a" x="405" y="5" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[0.00%]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e3529beb-17dd-4342-b1b8-a3b11675633d" x="140" y="4" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0151cde8-bafa-4786-88fe-02b91b0f41e1" x="256" y="4" width="43" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{units}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="01959ab8-8152-4bc5-b04f-afa825cc6a1c" x="461" y="4" width="88" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{item_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c8a01ca6-8036-4ebd-ae58-ba33f7742cd3" x="319" y="4" width="78" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{item_unit_price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="93" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5cb367e7-0a4a-438d-b5e2-4a96d89dec5a" x="361" y="2" width="46" height="20"/>
+				<textElement/>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="934f9896-cf82-4b6b-a01e-410cea30062e" x="280" y="60" width="277" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="057d6da0-6faf-4bc4-832b-abad58898ac0" x="361" y="44" width="100" height="16"/>
+				<textElement/>
+				<text><![CDATA[Total Net Payments]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="32290dfc-9c2e-49e1-866f-c47bd818bc22" x="69" y="2" width="488" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cd3e6797-e3fd-4824-8f63-09bfc62856d6" x="69" y="67" width="58" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="70db14a8-c326-4e13-960e-ec5b86e1f399" x="361" y="67" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Amount Due]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="21cf109e-33e2-47d9-b7ed-61a1cef91c8a" x="277" y="19" width="277" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="ab453c3c-1260-4bd8-b97c-acc259d838fc" x="127" y="67" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{billing_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85e55501-2b59-41a6-abfe-e8d6df88ba03" x="461" y="2" width="88" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{item_total_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85e55501-2b59-41a6-abfe-e8d6df88ba03" x="457" y="41" width="92" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{item_total_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="85e55501-2b59-41a6-abfe-e8d6df88ba03" x="461" y="67" width="88" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{item_total_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="151" splitType="Stretch">
+			<line>
+				<reportElement uuid="6b5544bd-ad55-4aec-9fc6-b8390ec56230" x="65" y="54" width="487" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2ee10068-245f-478e-b62f-65c570a6dd11" x="104" y="25" width="402" height="37"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Please remit to HSBC Bank. Sort code 40-25-34. Account number 52614529
+Accounts Department, Po Box 839, 24 Hill Street, St Helier, Jersey, JE4 0UP]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="c2af82d1-d286-412d-a287-0a74a766e0ab" x="65" y="21" width="486" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c7f8daed-064a-42a8-9437-b0a57468480e" x="60" y="98" width="489" height="1" forecolor="#FF9900"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8152d680-fd02-433b-9044-bb002c5034aa" x="117" y="98" width="421" height="26" forecolor="#00CCFF"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calligo Limited. Registered office – 24 Hill Street, St Helier, Jersey, JE2 4UA. Registration number 108654.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="71" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="layout" content="main" />
+    <title>RT Links create</title>         
+  </head>
+  <body>
+    <div class="body">
+      <h1>RT Links create</h1>
+      
+      <g:if test="${flash.message}">
+        <div class="message">${flash.message}</div>
+      </g:if>
+      <g:set var="ticket" value="${dashboard.Ticket.get(params.id)}"/>
+      <g:form action="links" id="${ticket?.id}" controller="ticket" method="post" >
+      <g:hiddenField name="id" value="${ticket?.tid}" /> 
+        <div class="dialog">
+          <table>
+            <tbody>            
+              <tr class="prop">
+                <td class="name">
+                  <label for="dependOn">Depend On:</label>
+                </td>
+                <td>
+                  <input type="url" id="dependOn" name="dependOn"/>
+                </td>
+              </tr> 
+              <tr class="prop">
+                <td class="name">
+                  <label for="refersTo">Refers to:</label>
+                </td>
+                <td>
+                  <input type="url" id="refersTo" name="refersTo"/>
+                </td>
+              </tr> 
+          
+             </tbody>
+           </table>
+        <div class="buttons">
+          <span class="button">
+            <input class="save" type="submit" value="Submit" />
+          </span>
+        </div>
+      </g:form>
+    </div>
+  </body>
+</html>

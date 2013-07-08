@@ -1,0 +1,188 @@
+package dashboard
+import java.net.URL
+import net.Rounding
+import groovy.sql.Sql
+import groovyx.net.http.*
+import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.ContentType
+import groovyx.net.http.Method
+import groovyx.net.http.RESTClient
+import java.net.proxy.*
+import grails.converters.JSON
+import groovyx.net.http.*
+import groovy.json.JsonSlurper
+import org.codehaus.groovy.grails.web.servlet.mvc.GrailsHttpSession
+import java.net.InetAddress
+import groovyx.net.http.HttpResponseDecorator
+import javax.servlet.ServletException
+import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.Cookie
+import org.codehaus.groovy.grails.web.util.WebUtils
+import org.springframework.web.context.request.RequestContextHolder
+import org.apache.http.impl.cookie.BasicClientCookie
+import javax.servlet.ServletRequestListener
+import java.util.Map
+
+class TicketController {
+	def scaffold = true
+
+	def create = {
+		def ticket = new Ticket(params)
+
+		def ticketId = Ticket.listOrderById(max:1, order:"desc")
+
+		flash.message = ticketId.tid + "This is the last created ticket, please make sure you insert the next value "
+
+	}
+
+	def save = {
+
+		def ticketId = Ticket.listOrderById(max:1, order:"desc")
+		def ticket = new Ticket(params)
+		def tid = params.tid
+		def tlast = params.tlast
+		def token = params.id + params.tsubject
+		def tqueue = params.tqueue
+		def tresolved = params.tresolved
+		def tstatus = params.tstatus
+		def tsubject = params.tsubject
+		def towner = params.towner
+		def tcreator = params.tcreator
+		def tpriority = params.tpriority
+		def tinitialPriority = params.tinitialPriority
+		def tfinalPriority = params.tfinalPriority
+		def trequestors = params.trequestors
+		def tcc = params.tcc
+		def tadminCc = params.tadminCc
+		def tcreated = params.tcreated
+		def tstarts = params.tstarts
+		def tstarted = params.tstarted
+		def tdue = params.tdue
+		def ttold = params.ttold
+		def ttimeEstimated = params.ttimeEstimated
+		def ttimeWorked = params.ttimeWorked
+		def ttimeLeft = params.ttimeLeft
+		def http = new HTTPBuilder("http://10.20.41.111/REST/1.0")
+        	http.request(Method.POST, ContentType.ANY){
+        	uri.path="http://10.20.41.111/REST/1.0/ticket/new/"
+        	uri.query = [user:'root', pass:'Mn4£dss2Z', content:"id: ${tid}\nLast Updated: ${tlast}\nQueue: ${tqueue}\nResolved: ${tresolved}\nStatus: ${tstatus}\nSubject: ${tsubject}\nOwner: ${towner}\nPriority: ${tpriority}\nInitialPriority: ${tinitialPriority}\nFinalPriority: ${tfinalPriority}\nRequestors: ${trequestors}\nCc: ${tcc}\nAdminCc: ${tadminCc}\nStarts: ${tstarts}\nStarted: ${tstarted}\nDue: ${tdue}\nTimeEstimated: ${ttimeEstimated}\nTimeWorked: ${ttimeWorked}\nTimeLeft: ${ttimeLeft}"]
+        	 
+        	response.success = {resp, text->  
+
+        	def ret = text.getText() 
+
+
+      	
+       if(!ticket.hasErrors() && ticket.save()){
+        	flash.message = "${ret}"
+        	ticket.delete()
+        	redirect (action:'list')
+        }
+        else
+        {
+        	render(view:'create', model:[ticket:ticket])
+        }
+}
+ }       
+ 
+
+	}
+
+	def show = {
+		def ticketInstance = Ticket.get(params.id)
+		if(!ticketInstance){
+
+			flash.message = "${ticket.id}.not.found"
+			return
+
+		}
+
+		render (view:'show', model:[ticketInstance:ticketInstance])
+		
+
+
+	}
+
+	def list = {
+		
+			
+					params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        [ticketInstanceList: Ticket.list(params), ticketInstanceTotal: Ticket.count()]
+
+			
+
+		
+
+	}
+
+
+	def update = {
+
+		def ticket = Ticket.get(params.id)
+		ticket.properties = params
+			if (ticket) {
+			if (params.token) { 
+                          
+                if (ticket.token != params.token) {
+                    
+                   ticket.delete()
+                }
+            }
+}
+
+      	
+      	def tid = params.tid
+		def tlast = params.tlast
+		def token = params.id + params.tsubject
+		def tqueue = params.tqueue
+		def tresolved = params.tresolved
+		def tstatus = params.tstatus
+		def tsubject = params.tsubject
+		def towner = params.towner
+		def tcreator = params.tcreator
+		def tpriority = params.tpriority
+		def tinitialPriority = params.tinitialPriority
+		def tfinalPriority = params.tfinalPriority
+		def trequestors = params.trequestors
+		def tcc = params.tcc
+		def tadminCc = params.tadminCc
+		def tcreated = params.tcreated
+		def tstarts = params.tstarts
+		def tstarted = params.tstarted
+		def tdue = params.tdue
+		def ttold = params.ttold
+		def ttimeEstimated = params.ttimeEstimated
+		def ttimeWorked = params.ttimeWorked
+		def ttimeLeft = params.ttimeLeft
+		def http = new HTTPBuilder("http://10.20.41.111/REST/1.0")
+        	http.request(Method.POST, ContentType.ANY){
+        	uri.path="http://10.20.41.111/REST/1.0/ticket//edit"
+        	        	uri.query = [user:'root', pass:'Mn4£dss2Z', content:"id: ${tid}\nLast Updated: ${tlast}\nQueue: ${tqueue}\nResolved: ${tresolved}\nStatus: ${tstatus}\nSubject: ${tsubject}\nOwner: ${towner}\nPriority: ${tpriority}\nInitialPriority: ${tinitialPriority}\nFinalPriority: ${tfinalPriority}\nRequestors: ${trequestors}\nCc: ${tcc}\nAdminCc: ${tadminCc}\nStarts: ${tstarts}\nStarted: ${tstarted}\nDue: ${tdue}\nTimeEstimated: ${ttimeEstimated}\nTimeWorked: ${ttimeWorked}\nTimeLeft: ${ttimeLeft}"]
+
+        	 
+        	response.success = {resp, text->  
+
+        	def ret = text.getText() 
+       if(!ticket.hasErrors()){
+
+        	flash.message = "${ret}"
+        	ticket.delete()
+        	
+        	redirect (action:'list')
+        }
+        else
+        {
+        	redirect(action:'edit', model:[ticket:ticket])
+        }
+
+       
+}
+ }       
+
+	}
+
+
+
+}

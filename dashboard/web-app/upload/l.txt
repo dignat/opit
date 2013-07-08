@@ -1,0 +1,3 @@
+ <listener>
+        <listener-class>org.codehaus.groovy.grails.web.context.GrailsContextLoaderListener</listener-class>
+    </listener>

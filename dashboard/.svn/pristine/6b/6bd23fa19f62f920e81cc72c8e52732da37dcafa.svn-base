@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2805eaa6-1ed8-473e-924a-da814467de12">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="invoice_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="clientId" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     client.`id` AS client_id,
+     client.`version` AS client_version,
+     client.`address1` AS client_address1,
+     client.`address2` AS client_address2,
+     client.`city` AS client_city,
+     client.`clientid` AS client_clientid,
+     client.`company` AS client_company,
+     client.`country` AS client_country,
+     client.`county` AS client_county,
+     client.`fax` AS client_fax,
+     client.`postcode` AS client_postcode,
+     client.`session_timeout` AS client_session_timeout,
+     client.`telephone` AS client_telephone,
+     client.`tenant_id` AS client_tenant_id,
+     client_purchased_products.`client_products_id` AS client_purchased_products_client_products_id,
+     client_purchased_products.`purchased_products_id` AS client_purchased_products_purchased_products_id,
+     product.`id` AS product_id,
+     product.`version` AS product_version,
+     product.`description` AS product_description,
+     product.`frequency` AS product_frequency,
+     product.`gl_code` AS product_gl_code,
+     product.`importid` AS product_importid,
+     product.`territory_id` AS product_territory_id,
+     product_prices.`id` AS product_prices_id,
+     product_prices.`version` AS product_prices_version,
+     product_prices.`effective_date` AS product_prices_effective_date,
+     product_prices.`product_id` AS product_prices_product_id,
+     product_prices.`setup_price` AS product_prices_setup_price,
+     product_prices.`unit_price` AS product_prices_unit_price,
+     purchased_products.`id` AS purchased_products_id,
+     purchased_products.`version` AS purchased_products_version,
+     purchased_products.`product_id` AS purchased_products_product_id,
+     purchased_products.`tenant_id` AS purchased_products_tenant_id,
+     purchased_products.`units` AS purchased_products_units
+FROM
+     `client` client INNER JOIN `client_purchased_products` client_purchased_products ON client.`id` = client_purchased_products.`client_products_id`
+     INNER JOIN `purchased_products` purchased_products ON client_purchased_products.`purchased_products_id` = purchased_products.`id`
+     INNER JOIN `product` product ON purchased_products.`product_id` = product.`id`
+     INNER JOIN `product_prices` product_prices ON product.`id` = product_prices.`product_id`
+WHERE
+     client.`id` = $P{clientId}]]>
+	</queryString>
+	<field name="client_id" class="java.lang.Long"/>
+	<field name="client_version" class="java.lang.Long"/>
+	<field name="client_address1" class="java.lang.String"/>
+	<field name="client_address2" class="java.lang.String"/>
+	<field name="client_city" class="java.lang.String"/>
+	<field name="client_clientid" class="java.lang.String"/>
+	<field name="client_company" class="java.lang.String"/>
+	<field name="client_country" class="java.lang.String"/>
+	<field name="client_county" class="java.lang.String"/>
+	<field name="client_fax" class="java.lang.String"/>
+	<field name="client_postcode" class="java.lang.String"/>
+	<field name="client_session_timeout" class="java.lang.Integer"/>
+	<field name="client_telephone" class="java.lang.String"/>
+	<field name="client_tenant_id" class="java.lang.Long"/>
+	<field name="client_purchased_products_client_products_id" class="java.lang.Long"/>
+	<field name="client_purchased_products_purchased_products_id" class="java.lang.Long"/>
+	<field name="product_id" class="java.lang.Long"/>
+	<field name="product_version" class="java.lang.Long"/>
+	<field name="product_description" class="java.lang.String"/>
+	<field name="product_frequency" class="java.lang.String"/>
+	<field name="product_gl_code" class="java.lang.String"/>
+	<field name="product_importid" class="java.lang.Integer"/>
+	<field name="product_territory_id" class="java.lang.Long"/>
+	<field name="product_prices_id" class="java.lang.Long"/>
+	<field name="product_prices_version" class="java.lang.Long"/>
+	<field name="product_prices_effective_date" class="java.sql.Timestamp"/>
+	<field name="product_prices_product_id" class="java.lang.Long"/>
+	<field name="product_prices_setup_price" class="java.math.BigDecimal"/>
+	<field name="product_prices_unit_price" class="java.math.BigDecimal"/>
+	<field name="purchased_products_id" class="java.lang.Long"/>
+	<field name="purchased_products_version" class="java.lang.Long"/>
+	<field name="purchased_products_product_id" class="java.lang.Long"/>
+	<field name="purchased_products_tenant_id" class="java.lang.Long"/>
+	<field name="purchased_products_units" class="java.lang.Integer"/>
+	<variable name="product_prices_unit_price_1" class="java.math.BigDecimal" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{product_prices_unit_price}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="75" splitType="Stretch">
+			<image>
+				<reportElement uuid="e98f588a-2672-460e-ba1d-2c3c294d314c" x="431" y="10" width="87" height="65"/>
+				<imageExpression><![CDATA["logo_calligo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="58769a7e-88f0-44ba-a833-fb08897a0b90" x="282" y="19" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0ec485b5-01b3-469b-a240-e80596b97388" x="60" y="18" width="129" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTLY USAGE]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="f37737c3-5c1f-4cde-836c-4c8f08130066" x="140" y="68" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ddbff1c-db56-4a1b-a712-c521b68f6262" x="256" y="68" width="63" height="20"/>
+				<textElement/>
+				<text><![CDATA[Quantity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c0009ee-6fe1-4cbf-a206-6481052cc9f6" x="319" y="69" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[Unit Price]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="35cc22a3-2b5e-4f5d-a7e2-91167ed9dc89" x="65" y="88" width="489" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="332d0dea-b18a-442d-8ca5-43c07a183a68" x="65" y="17" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{client_company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="00cca1b5-df62-4b1a-a61e-9f8657046b49" x="283" y="22" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_prices_effective_date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<elementGroup/>
+			<elementGroup/>
+			<textField>
+				<reportElement uuid="1e8519c1-2c77-41ff-b690-a1d65b1348dd" x="142" y="7" width="98" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a0d17e3e-5b90-40af-a4fb-21552be9c9ed" x="325" y="7" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_prices_unit_price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3882a583-dc29-4a73-970b-70bc143cb1e7" x="256" y="7" width="50" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{purchased_products_units}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="93" splitType="Stretch">
+			<line>
+				<reportElement uuid="32290dfc-9c2e-49e1-866f-c47bd818bc22" x="69" y="4" width="488" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cd3e6797-e3fd-4824-8f63-09bfc62856d6" x="69" y="67" width="58" height="20"/>
+				<textElement/>
+				<text><![CDATA[Date Due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0785c6b2-bb52-49f6-89fb-359080dd37c1" x="418" y="73" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total price]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="06904036-0449-4b83-a9bc-42d11feb7413" x="156" y="67" width="241" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_prices_effective_date} + 30 ]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="151" splitType="Stretch">
+			<line>
+				<reportElement uuid="c7f8daed-064a-42a8-9437-b0a57468480e" x="60" y="98" width="489" height="1" forecolor="#FF9900"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8152d680-fd02-433b-9044-bb002c5034aa" x="117" y="98" width="421" height="26" forecolor="#00CCFF"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calligo Limited. Registered office – 24 Hill Street, St Helier, Jersey, JE2 4UA. Registration number 108654.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3cc46681-c3a9-4987-acf5-bf5f49f0c373" x="418" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{product_prices_unit_price_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="71" splitType="Stretch"/>
+	</summary>
+</jasperReport>

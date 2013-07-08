@@ -1,0 +1,19 @@
+package dashboard
+
+class PurchasedProducts {
+	Product product
+	Integer units = 1
+	Long tenantId = 1
+
+
+static belongsTo = [Client]
+
+    static constraints = {
+		product(blank:false)
+		tenantId(display:false)
+    }
+
+	String toString() {
+		return product
+	}
+}

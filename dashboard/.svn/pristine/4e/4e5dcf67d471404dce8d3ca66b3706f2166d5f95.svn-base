@@ -1,0 +1,21 @@
+package dashboard
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.security.core.context.SecurityContextHolder 
+
+
+class OpitJob {
+def springSecurityService
+def configService
+def authenticateService
+
+    static triggers = {
+      simple repeatInterval: 5000l // execute job once in 5 seconds
+    }
+
+    def execute() {
+        // execute job
+
+
+
+    }
+}

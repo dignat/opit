@@ -1,0 +1,307 @@
+<%@import CustomTimeoutSessionlistener%>
+<%@import Logintable%>
+<%@import SecurityFilters%>
+<html>
+	<head>
+		<meta name="layout" content="main"/>
+		<title>Calligo Dashboard</title>
+		<style type="text/css" media="screen">
+			#status {
+				background-color: transparent;
+				border: .0em solid #fff;
+				margin: 14em 2em 1em;
+				padding: 1em;
+				width: 220px;
+				float: right;
+				
+				
+				border-radius: 0.6em;
+				position: absolute;/*added for chrome and safari*/
+			}
+
+			.ie6 #status {
+				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
+			}
+
+			#status ul {
+				font-size: 0.9em;
+				list-style-type: none;
+				margin-bottom: 0.6em;
+				padding: 0;
+			}
+            
+			#status li {
+				line-height: 1.3;
+				text-align: center;
+			}
+
+			#status h1 {
+				text-transform: uppercase;
+				font-size: 1.1em;
+				margin: 0 0 0.3em;
+			}
+
+			#page-body {
+				margin: 2em 1em 1.25em 18em;
+
+			}
+
+			h2 {
+				margin-top: 1em;
+				margin-bottom: 0.3em;
+				font-size: 1em;
+			}
+
+
+			h3 {
+				margin-top: 1em;
+				margin-bottom: 0.3em;
+				font-size: 3em;
+				color:red;
+				font-weight: bold;
+				width :100px;
+			}
+
+			h4 {
+				margin-top: 1em;
+				margin-bottom: 0.3em;
+				font-size: 3em;
+				color:green;
+				font-weight: bold;
+				width :100px;
+				
+			}
+
+			p {
+				line-height: 1.5;
+				margin: 0.25em 0;
+			}
+
+			#controller-list ul {
+				list-style-position: inside;
+			}
+
+			#controller-list li {
+				line-height: 1.3;
+				list-style-position: inside;
+				margin: 0.25em 0;
+			}
+
+			@media screen and (max-width: 480px) {
+			/*	#status {
+					display: none;
+				}*/
+
+				#page-body {
+					margin: 0 1em 1em;
+				}
+
+				#page-body h1 {
+					margin-top: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+
+		
+		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<div class = "navigation-block affix-top">
+			<section class="user-profile">
+				<figure>
+					<!--	<img>-->
+				</figure>
+			</section>
+		<div class="nav-bar">
+		<nav class = "main-navigation nav-collapse collapse" role="navigation">
+			<ul>
+				<li><a href="${createLinkTo(dir:"")}"><img src="${resource(dir: 'images', file: 'dashboard.png')}" alt="Calligo"/><br>Dashboard</li></a>				
+				<li><a href="${createLink(controller: 'virtualMachine',action: 'vmindex')}"> <img src="${resource(dir: 'images', file: 'vm-management.png')}" alt="Calligo"/><br>VM Management</li></a>
+				<li><a href="${createLink(controller: 'invoice',action: 'list')}"> <img src="${resource(dir: 'images', file: 'earning-statements-icon.png')}" alt="Calligo"/><br>Billing</li></a>
+				<li><a href="${createLink(controller: 'client',action: 'list')}"> <img src="${resource(dir: 'images', file: 'logs.png')}" alt="Calligo"/><br>Logs</li></a>
+				<sec:ifAllGranted roles="ROLE_ADMIN">
+				<li><a href="${createLink(controller: 'user',action: 'adminindex')}"> <img src="${resource(dir: 'images', file: 'Users-icon.png')}" alt="Calligo"/> <br> Admin</li></a>
+				</sec:ifAllGranted>
+				
+			</ul>
+		</nav>
+	</div>
+	
+</div>
+
+<div class="mobselect">
+	<select name ="menu" onChange="self.location.href=options[selectedIndex].value;"> 
+    <option value="" selected="selected">Select</option> 
+    
+    <option value="${createLinkTo(dir:"")}">Dashboard</option> 
+    <option value="${createLink(controller: 'virtualMachine',action: 'vmindex')}">VM Management</option> 
+    <option value="${createLink(controller: 'invoice',action: 'list')}">Billing</option> 
+    <option value="${createLink(controller: 'client',action: 'list')}">Logs</option> 
+    <option value="${createLink(controller: 'user',action: 'adminindex')}">Admin</option> 
+  </select> 
+  </div>
+
+<script type = 'text/javascript'>
+$(document).ready(function () {
+    $(window).resize(function(){
+        drawChart();
+    });
+});
+</script>
+		<div class = "content-block" role="main">
+		
+		
+			<g:if test="${flash.message}">
+			<div class="message" role="status">${flash.message}</div>
+			</g:if>
+			<div id="controller-list" role="navigation">
+				<h1>Monthly Statistics: Previous Months Peak / Current Months Peak  - Percentage Change of Total Available</h1>
+
+				<p id = "date" style="font-size:12pt"></p>
+				<br>
+				<html>
+  <head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    
+      <script type="text/javascript">
+
+
+     function drawChart() {
+    // Create and populate the data table.
+  var option = {title:"Monthly Service",
+               
+               animation: {duration: 1000, easing: 'out',},
+               vAxis: {title: "Hardware", minValue:0, maxValue:400},
+               colors: ['#2F7ED8', '#8BBC21', '#0D233A'],
+
+               hAxis: {title: "Percent"}};
+  var data = google.visualization.arrayToDataTable([
+
+          ['Year', 'April', 'May' , 'Delta'],
+          ['DISK',  75, 70, -15],
+          ['RAM',  90, 85 ,-15],
+          ['CPU',  56, 78, 22]
+        ]);
+
+  
+  
+  // Create and draw the visualization.
+  var chart = new google.visualization.ColumnChart(document.getElementById('demo-1'));
+  chart.draw(data, option);
+  data.setValue(0, 1, 400);
+  data.setValue(0, 2, 200);
+  data.setValue(0, 3, 20);
+  data.setValue(1, 1, 300);
+  data.setValue(1, 2, 280);
+  data.setValue(1, 3, -35);
+  data.setValue(2, 1, 580);
+  data.setValue(2, 2, 480);
+  data.setValue(2, 3, -25);
+  
+  
+   
+  chart.draw(data, option);
+
+}
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+
+       
+
+
+
+
+    </script>
+  </head>
+  <body>
+
+ 	
+
+
+ <div class ='app-status' >
+  		<table >
+  <tbody>
+    <tr>
+      <td style = "color:#3EA437;" id = "ram" >Disk: 75.00GB / 71.25GB  </td>
+      <td style = "color:#3EA437;" id = "cpu" >RAM: 45.00GB / 42.75GB </td>
+      <td style = "color:#3EA437;" id = "disk2" >CPU: 5.0Ghz / 5.6Ghz </td>
+    </tr>
+     <tr>
+      <td style=" text-align: center;color:#3EA437;">-5 %  <img src="${resource(dir: 'images', file: 'arrow-red.png')}" alt="Calligo"/></td>
+      <td style=" text-align: center;color:#3EA437;">-5 % <img   src="${resource(dir: 'images', file: 'arrow-red.png')}" alt="Calligo"/></td>
+      <td style=" text-align: center;color:#3EA437;">+12 % <img   src="${resource(dir: 'images', file: 'arrow-green.png')}" alt="Calligo"/></td>
+    </tr>
+  </tbody>
+</table>
+
+ </div>
+
+
+    <div id="demo-1" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    <!--<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>!-->
+
+
+
+
+</div>
+
+
+
+		<h2 class="inlineblock">Tickets:</h2> 
+<div style = "width:100%; background-color: #fff; overflow-y:auto; _overflow:auto;
+				border: .0em solid #fff;
+				margin: 2em 1em 0.2em;
+				-moz-box-shadow: 0px 0px 1.25em #ccc;
+				-webkit-box-shadow: 0px 0px 1.25em #ccc;
+				box-shadow: 0px 0px 1.25em #ccc;
+				-moz-border-radius: 0.6em;
+				-webkit-border-radius: 0.6em;">
+<table style="width:100%" cellpadding="0" cellspacing="0" >
+				
+					<tr>
+										
+						<th>Id</th>
+							<th>Status</th>
+								<th>Subject</th>
+									<th>Resolved</th>
+									<th>Last Updated</th>
+					
+					</tr>
+					</table>
+				</div>
+
+<div id="bottom-table">
+		<table  cellpadding="0" cellspacing="0">
+				
+				<tbody height="50px">
+				<g:each in="${dashboard.Ticket.listOrderByTlast(order:'asc')}" status="i" var="ticket">
+					
+					
+						<tr>
+					
+						<td><g:link controller = "ticket" action="show" id="${ticket.id}">${ticket.tid}</g:link></td>
+					
+						<td>${ticket.tstatus}</td>
+					
+						<td>${ticket.tsubject}</td>
+					
+						<td>${ticket.tresolved}</td>
+						<td>${ticket.tlast}</td>
+					
+					</tr>
+				</g:each>
+				</tbody>
+			</table>
+</section>
+
+</div>
+  </body>
+</html>
+			
+		</div>
+		</div>
+	
+
+	</body>
+</html>

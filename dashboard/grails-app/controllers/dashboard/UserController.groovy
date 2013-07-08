@@ -1,0 +1,10 @@
+package dashboard
+
+class UserController {
+	def scaffold = true
+
+	def adminindex() {
+		render (view:'adminindex')
+	}
+
+}

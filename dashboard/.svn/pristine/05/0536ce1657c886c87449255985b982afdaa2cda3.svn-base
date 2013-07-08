@@ -1,0 +1,28 @@
+package dashboard
+
+class Item {
+	Product product
+	Integer units = 1
+	BigDecimal itemTotal = 0
+	BigDecimal itemUnitPrice = 0
+	Boolean firstBilling = true
+	BigDecimal setupPriceTotal = 0
+	BigDecimal setupUnitPrice = 0
+	Long tenantId = 1
+	
+    static constraints = {
+		product (blank:false)
+		units (blank:false)
+		itemTotal(editable: false)
+		setupPriceTotal(editable: false,nullable:true,blank:true)
+		tenantId(display:false)
+    }
+
+
+    static belongsTo = [Invoice]
+
+
+	String toString() {
+		return product.toString() + "," + units
+	}
+}

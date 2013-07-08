@@ -1,0 +1,45 @@
+<%@ page import="dashboard.Ticket" %>
+<!doctype html>
+<html>
+  <head>
+    <meta name="layout" content="main" />
+    <title>Write reply</title>         
+  </head>
+  <body>
+    <div class="body">
+      <h1>Write a reply</h1>
+      
+      <g:if test="${flash.message}">
+        <div class="message">${flash.message}</div>
+      </g:if>
+    
+<g:set var="ticket" value="${dashboard.Ticket.get(params.id)}"/>
+    
+      <g:form action="reply"   id="${ticket?.id}" controller="ticket" method="post">
+       <g:textField name="id" value="${ticket?.tid}" /> 
+
+        <div class="dialog">
+          
+                  <label for="comment">Text:</label>
+               
+                  <textarea name="comment">Comment...
+                  </textarea>
+                </br></br>
+                
+          
+             
+                 
+              
+                  
+               
+        </div>
+        <div class="buttons">
+         
+            <input class="button white" type="submit" value="Submit" />
+        
+        </div>
+      </g:form>
+
+    </div>
+  </body>
+</html>

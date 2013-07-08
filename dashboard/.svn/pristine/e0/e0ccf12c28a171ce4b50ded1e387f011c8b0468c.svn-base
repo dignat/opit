@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3373e770-14a7-4c42-9d04-0f69ffc2f61d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     client_purchased_products.`client_products_id` AS client_purchased_products_client_products_id,
+     client_purchased_products.`purchased_products_id` AS client_purchased_products_purchased_products_id,
+     client.`id` AS client_id,
+     client.`version` AS client_version,
+     client.`address1` AS client_address1,
+     client.`address2` AS client_address2,
+     client.`city` AS client_city,
+     client.`clientid` AS client_clientid,
+     client.`company` AS client_company,
+     client.`country` AS client_country,
+     client.`county` AS client_county,
+     client.`fax` AS client_fax,
+     client.`postcode` AS client_postcode,
+     client.`session_timeout` AS client_session_timeout,
+     client.`telephone` AS client_telephone,
+     client.`tenant_id` AS client_tenant_id,
+     product.`id` AS product_id,
+     product.`version` AS product_version,
+     product.`description` AS product_description,
+     product.`frequency` AS product_frequency,
+     product.`gl_code` AS product_gl_code,
+     product.`importid` AS product_importid,
+     product.`territory_id` AS product_territory_id,
+     product_prices.`id` AS product_prices_id,
+     product_prices.`version` AS product_prices_version,
+     product_prices.`effective_date` AS product_prices_effective_date,
+     product_prices.`product_id` AS product_prices_product_id,
+     product_prices.`setup_price` AS product_prices_setup_price,
+     product_prices.`unit_price` AS product_prices_unit_price,
+     purchased_products.`id` AS purchased_products_id,
+     purchased_products.`version` AS purchased_products_version,
+     purchased_products.`product_id` AS purchased_products_product_id,
+     purchased_products.`tenant_id` AS purchased_products_tenant_id,
+     purchased_products.`units` AS purchased_products_units
+FROM
+     `client` client INNER JOIN `client_purchased_products` client_purchased_products ON client.`id` = client_purchased_products.`client_products_id`
+     INNER JOIN `purchased_products` purchased_products ON client_purchased_products.`purchased_products_id` = purchased_products.`id`
+     INNER JOIN `product` product ON purchased_products.`product_id` = product.`id`
+     INNER JOIN `product_prices` product_prices ON product.`id` = product_prices.`product_id`]]>
+	</queryString>
+	<field name="client_purchased_products_client_products_id" class="java.lang.Long"/>
+	<field name="client_purchased_products_purchased_products_id" class="java.lang.Long"/>
+	<field name="client_id" class="java.lang.Long"/>
+	<field name="client_version" class="java.lang.Long"/>
+	<field name="client_address1" class="java.lang.String"/>
+	<field name="client_address2" class="java.lang.String"/>
+	<field name="client_city" class="java.lang.String"/>
+	<field name="client_clientid" class="java.lang.String"/>
+	<field name="client_company" class="java.lang.String"/>
+	<field name="client_country" class="java.lang.String"/>
+	<field name="client_county" class="java.lang.String"/>
+	<field name="client_fax" class="java.lang.String"/>
+	<field name="client_postcode" class="java.lang.String"/>
+	<field name="client_session_timeout" class="java.lang.Integer"/>
+	<field name="client_telephone" class="java.lang.String"/>
+	<field name="client_tenant_id" class="java.lang.Long"/>
+	<field name="product_id" class="java.lang.Long"/>
+	<field name="product_version" class="java.lang.Long"/>
+	<field name="product_description" class="java.lang.String"/>
+	<field name="product_frequency" class="java.lang.String"/>
+	<field name="product_gl_code" class="java.lang.String"/>
+	<field name="product_importid" class="java.lang.Integer"/>
+	<field name="product_territory_id" class="java.lang.Long"/>
+	<field name="product_prices_id" class="java.lang.Long"/>
+	<field name="product_prices_version" class="java.lang.Long"/>
+	<field name="product_prices_effective_date" class="java.sql.Timestamp"/>
+	<field name="product_prices_product_id" class="java.lang.Long"/>
+	<field name="product_prices_setup_price" class="java.math.BigDecimal"/>
+	<field name="product_prices_unit_price" class="java.math.BigDecimal"/>
+	<field name="purchased_products_id" class="java.lang.Long"/>
+	<field name="purchased_products_version" class="java.lang.Long"/>
+	<field name="purchased_products_product_id" class="java.lang.Long"/>
+	<field name="purchased_products_tenant_id" class="java.lang.Long"/>
+	<field name="purchased_products_units" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement uuid="65a7ad12-6fc5-4b8c-8051-8946f30edcee" x="101" y="35" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{client_company}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3331136f-d4d2-4777-a4fc-0f19323d48d1" x="303" y="41" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0599c26a-7aa3-46ed-a17f-fc8ac938fd89" x="110" y="81" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{product_prices_effective_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="74bb0607-58fc-45dc-ad79-e4b3f531defb" x="101" y="23" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[product_prices_effective_date]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c641faa3-9f71-4b67-9b48-5d94e14d2bd7" x="328" y="81" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{purchased_products_units}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8f2046c5-39ae-45cc-90dd-bf2252de1788" x="318" y="23" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[purchased_products_units]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

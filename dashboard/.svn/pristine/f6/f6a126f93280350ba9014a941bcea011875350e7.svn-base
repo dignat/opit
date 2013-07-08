@@ -1,0 +1,26 @@
+import javax.servlet.http.HttpSessionEvent    
+import javax.servlet.http.HttpSessionListener  
+import org.springframework.security.core.context.SecurityContextHolder   
+import dashboard.*   
+     
+public class CustomTimeoutSessionListener implements HttpSessionListener {    
+     
+    ConfigService configService   // autowired    
+     
+    @Override    
+    void sessionCreated(HttpSessionEvent se) {    
+         def session = se.getSession()
+    def context = (SecurityContextHolder)session.getAttribute("SPRING_SECURITY_CONTEXT")
+    def authentication = session.SPRING_SECURITY_CONTEXT?.authentication?.principal?.getAuthorities()
+    //Object principal = authentication.getPrincipal()  
+    if(authentication.equals("ROLE_USER"))
+       se.getSession().setMaxInactiveInterval(10*60)
+       println ("session created")
+        
+    }    
+     
+    @Override    
+    void sessionDestroyed(HttpSessionEvent se) {    
+        // nothing to do here...    
+    }    
+}

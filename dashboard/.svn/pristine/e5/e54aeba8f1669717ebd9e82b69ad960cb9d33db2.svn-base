@@ -1,0 +1,62 @@
+package dashboard
+import java.net.URL
+import com.vmware.vim25.*
+import com.vmware.vim25.mo.*
+
+class MinJob {
+    static triggers = {
+      simple startDelay : 600001, repeatInterval: 300001
+    }
+
+    def execute(){
+      def cal = Calendar.instance
+      cal.add(Calendar.MINUTE, -10)
+      def ten = cal.getTime()
+      def date= new Date()
+      def dateList = [ten,date]
+
+      def des = VirtualMachine.createCriteria()
+      def result = des.list{       
+      property("description")
+      }
+     
+      result.each{
+      def name = it.description
+      }       
+      
+      def instance = new ServiceInstance("https://10.20.20.210/sdk".toURL(), "dashboard", "D45hboard!", true)
+      def rootFolder = instance.rootFolder
+      def dataCenter = new InventoryNavigator(rootFolder).searchManagedEntities("Datacenter")
+			dataCenter.each {
+	
+			  new InventoryNavigator(it.vmFolder).searchManagedEntities("VirtualMachine").each {
+
+  				def os = it.name
+  				def timestamp = new Date()
+          def min = VirtualMachineStats.createCriteria().get {
+            projections {
+              min 'consumedHostCPU'
+              min 'consumedHostMemory'
+              min 'memory'
+              min 'activeGuestMemory'
+              min 'provisonedStorage'
+              min 'usedStorage'
+              min 'unusedStorage'
+              min 'privateMem'
+              min 'sharedMem'
+              min 'activeMem'
+              min 'swappedMem'
+              like("description", "${os}")
+            }
+            and{
+            between('timestamp', ten, date)
+            }
+   
+          }
+        def minimum = new Min(description:os,consumedHostCPU:min[0],consumedHostMemory:min[1],memory:min[2],activeGuestMemory:min[3],provisonedStorage:min[4],usedStorage:min[5],unusedStorage:min[6],privateMem:min[7],sharedMem:min[8],activeMem:min[9],swappedMem:min[10],timestamp:timestamp).save(failOnError:true)
+
+        }
+      }       
+    }
+}
+
